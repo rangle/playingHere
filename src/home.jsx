@@ -1,11 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-require('style!css!./style.css');
+import 'style!css!./style.css';
 
 export default class Main extends React.Component {
 
   render() {
-    return <h1>Testing</h1>
+    return  <header className="page-header">
+        <div className="container">
+          <div class="row">
+            <div class="col-md-7">
+              <h1>Playing Here</h1>
+            </div>
+            <div class="col-md-5">
+
+            </div>
+          </div>
+        </div>
+      </header>
   }
 }
 
