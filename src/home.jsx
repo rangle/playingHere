@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+require('style!css!./style.css');
 
 export default class Main extends React.Component {
 
-  test = () => console.log('hi');
-
-  constructor(){
-    super();
-    this.test();
-  }
-
-  render(){
-    return <h1>Cool Beans!</h1>;
+  render() {
+    return <h1>Testing</h1>
   }
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+ReactDOM.render(
+  <Main />,
+  document.getElementById('root')
+);
