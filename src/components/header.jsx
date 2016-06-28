@@ -16,11 +16,16 @@ export default class HeaderComponent extends React.Component {
 
   render() {
     return (
-      <div className="header">
+      <header className="header">
         <div className="container">
-          <h1>{ this.props.title }</h1>
+          <div class="row">
+            <div class="col-md-7">
+              <h1>{ this.props.title }</h1>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
         </div>
-      </div>
+      </header>
     )
   }
 }
