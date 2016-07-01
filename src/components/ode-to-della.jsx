@@ -2,6 +2,25 @@ import React from 'react';
 
 export default class ClassyDella extends React.Component {
 
+
+  myStyle = {
+    topStyle: {
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: '#e8e8e8',
+      margin: '0 auto',
+      borderRadius: '3px',
+      width: '50vw',
+      padding: '20px'
+    },
+
+    rowStyle: {
+      borderBottom: '1px solid white',
+      marginBottom: '5px',
+      paddingBottom: '10px'
+    }
+  };
+
   //in classes, a constructor is called always, right when the class is being created
   //in this case, we want to access the props which are passed in, 'super' which basically just
   //says ignore whatever constructor this class was inherited from, I'm talking about me,
@@ -31,9 +50,9 @@ export default class ClassyDella extends React.Component {
     });
 
   //onChange accepts a function, uncalled, and when it is called it passes in an event
-  render = () => <div>
+  render = () => <div style={this.myStyle.topStyle}>
                     <h3>Della is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
-                    {this.state.greatReasons.map(reason => <h4>{reason}</h4>)}
+                    {this.state.greatReasons.map(reason => <h4 style={this.myStyle.rowStyle}>{reason}</h4>)}
                  </div>
 }
