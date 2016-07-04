@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HeaderComponent from './components/header.jsx';
+import CityListing from './components/city-list.jsx'
 
-// Styles
-import 'style!css!./styles/style.css'
+const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 
 export default class Main extends React.Component {
 
   render() {
-    return  <HeaderComponent title='Playing Here' />
+    return  <section id="root-container">
+                <HeaderComponent title='Playing Here' />
+                <CityListing cities={cityList} />
+            </section>
   }
 }
 
