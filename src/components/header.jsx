@@ -18,11 +18,11 @@ export default class HeaderComponent extends React.Component {
     return (
       <header className="header">
         <div className="container">
-          <div class="row">
-            <div class="col-md-7">
+          <div className="row">
+            <div className="col-md-7">
               <h1>{ this.props.title }</h1>
             </div>
-            <div class="col-md-4"></div>
+            <div className="col-md-4"></div>
           </div>
         </div>
       </header>

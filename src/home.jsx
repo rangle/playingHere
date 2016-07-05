@@ -4,6 +4,7 @@ import HeaderComponent from './components/header.jsx';
 import ArtistList from './components/artist-list.jsx';
 import CityListing from './components/city-list.jsx'
 import MapComponent from './components/map.jsx'
+import FooterComponent from './components/footer.jsx'
 
 const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 const listOfArtistsTop5 = [{name:'Beyonce', location: 'Texas', link:'https://en.wikipedia.org/wiki/Beyonc%C3%A9', imgLink:'https://cbsradionews.files.wordpress.com/2016/02/beyonce-super-bowl-50.jpg', bio:'Beyoncé Giselle Knowles-Carter born September 4, 1981) is an American singer, songwriter, record producer and actress. Born and raised in Houston, Texas, she performed in various singing and dancing competitions as a child and rose to fame in the late 1990s as lead singer of R&B girl-group Destiny\'s Child. Managed by her father, Mathew Knowles, the group became one of the world\'s best-selling girl groups of all time. Their hiatus saw the release of Beyoncé\'s debut album, Dangerously in Love (2003), which established her as a solo artist worldwide, earned five Grammy Awards and featured the Billboard Hot 100 number-one singles "Crazy in Love" and "Baby Boy".'},
@@ -26,6 +27,9 @@ export default class Main extends React.Component {
                       <ArtistList listIn={listOfArtistsTop5}/>
                     </div>
                   </div>
+                  <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
+                  body='Amy Tang, Chanelle Francis, Janelle Hinds and Tiffany Nogueira'
+                  MentorName='Abdella Ali' MentorImg='della.jpeg'/>
                 </section>
             </div>
   }
