@@ -1,20 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HeaderComponent from './components/header.jsx';
-import ClassyDella from './components/ode-to-della.jsx';
+import CityListing from './components/city-list.jsx'
 
-const reasonsDellaIsGreat = ['Handsomeness', 'Intelligence', 'Wit', 'Humility', 'Charisma', 'Humour'];
-
-// Styles
-import 'style!css!./styles/style.css';
+const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 
 export default class Main extends React.Component {
 
   render() {
-    return <section id="root-container">
-              <HeaderComponent title='Playing Heres' />
-              <ClassyDella reasons={reasonsDellaIsGreat} />
-            </section>
+    return  <div id="root-container">
+                <HeaderComponent title='Playing Here' />
+                <section>
+                  <div className="container">
+                    <div className="row">
+                      <CityListing cities={cityList} />
+
+                    </div>
+                  </div>
+                </section>
+
+            </div>
   }
 }
 
@@ -22,5 +27,3 @@ ReactDOM.render(
   <Main />,
   document.getElementById('root')
 );
-
-
