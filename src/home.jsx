@@ -8,10 +8,18 @@ const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 export default class Main extends React.Component {
 
   render() {
-    return  <section id="root-container">
+    return  <div id="root-container">
                 <HeaderComponent title='Playing Here' />
-                <CityListing cities={cityList} />
-            </section>
+                <section>
+                  <div className="container">
+                    <div className="row">
+                      <CityListing cities={cityList} />
+
+                    </div>
+                  </div>
+                </section>
+
+            </div>
   }
 }
 
