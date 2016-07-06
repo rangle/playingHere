@@ -49,7 +49,7 @@ export default class ArtistList extends React.Component {
                 </div>
                 {/*Table Info. Map/Loop over the artist array. Since each element is an object , get its values to display*/}
                 {this.state.artistListFiltered.map(artist =>
-                <div id={artist.name + 'row'} style={this.myStyle.rowStyle} class="row">
+                <div id={artist.name + 'row'} style={this.myStyle.rowStyle} className="row">
                   <div className="col-md-1"><a href={artist.link}>{artist.name}</a></div>
                   <div className="col-md-2"><img style={this.myStyle.imgSize} src={artist.imgLink}></img></div>
                   <div className="col-md-1">{artist.location}</div>
