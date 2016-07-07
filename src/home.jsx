@@ -24,13 +24,13 @@ export default class Main extends React.Component {
                     <div className="row">
                       <CityListing cities={cityList} />
                       <MapComponent lat={43.652644} long={-79.381769} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
-                      <ArtistList listIn={listOfArtistsTop5}/>
                     </div>
                   </div>
-                  <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
+                </section>
+                <ArtistList listIn={listOfArtistsTop5}/>
+                <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
                   body='Amy Tang, Chanelle Francis, Janelle Hinds and Tiffany Nogueira'
                   MentorName='Abdella Ali' MentorImg='della.jpeg'/>
-                </section>
             </div>
   }
 }

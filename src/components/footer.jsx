@@ -49,27 +49,27 @@ export default class FooterComponent extends React.Component {
       <footer className="footer">
         <div className="container" style={this.myStyle.containerStyles}>
           <div className="row" style={this.myStyle.centerText}>
-          <div className="col-md-4">
-            <h3>{this.props.title}</h3>
-            <hr style={this.myStyle.hrWidth}/>
-          </div>
-          <div className="col-md-4" style={this.myStyle.bodyStyles}>
-            <h4 style={this.myStyle.header}>{this.props.bodyTitle}</h4>
-            <p style={this.myStyle.paragraph}>{this.props.body}</p>
-          </div>
-          <div className="col-md-4" style={this.myStyle.bodyStyles}>
-            <h4>Mentor</h4>
-            <div className="row">
-            <div className="col-md-12">
-            <p>{this.props.MentorName}</p>
+            <div className="col-md-4">
+              <h3>{this.props.title}</h3>
+              <hr style={this.myStyle.hrWidth}/>
             </div>
-            <div className="col-md-12">
-              <img src={"../src/images/" + this.props.MentorImg} style={this.myStyle.imgSize}/>
+            <div className="col-md-4" style={this.myStyle.bodyStyles}>
+              <h4 style={this.myStyle.header}>{this.props.bodyTitle}</h4>
+              <p style={this.myStyle.paragraph}>{this.props.body}</p>
             </div>
-          </div>
+            <div className="col-md-4" style={this.myStyle.bodyStyles}>
+              <h4>Mentor</h4>
+              <div className="row">
+                <div className="col-md-12">
+                  <p>{this.props.MentorName}</p>
+                </div>
+                <div className="col-md-12">
+                  <img src={"../src/images/" + this.props.MentorImg} style={this.myStyle.imgSize}/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
       </footer>
     )
   }
