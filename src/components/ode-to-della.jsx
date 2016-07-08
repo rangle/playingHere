@@ -58,6 +58,10 @@ export default class ClassyDella extends React.Component {
                     <h3>Della is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
                     {this.state.greatReasons.length ? '' : <div> Stuff is loading, hold up</div>}
-                    {this.state.greatReasons.map(reason => <h4 style={this.myStyle.rowStyle}>{reason}</h4>)}
+                    {this.state.greatReasons.map(reason => 
+                      <div>
+                      <h4 style={this.myStyle.rowStyle}>{reason}</h4>
+                        <img src={`https://img.pokemondb.net/sprites/black-white/normal/${reason}.png`} alt=""/>
+                    </div>)}
                  </div>
 }
