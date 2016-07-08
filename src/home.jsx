@@ -39,7 +39,6 @@ export default class Main extends React.Component {
                 <section>
                   <div className="container">
                     <div className="row">
-                      <ClassyDella reasons={this.state.dellaReasons} />
                       <CityListing cities={cityList} />
                       <MapComponent lat={43.652644} long={-79.381769} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
                     </div>
