@@ -61,7 +61,7 @@ export default class ClassyDella extends React.Component {
                     {this.state.greatReasons.map(reason => 
                       <div>
                       <h4 style={this.myStyle.rowStyle}>{reason}</h4>
-                        <img src={`https://img.pokemondb.net/sprites/black-white/normal/${reason}.png`} alt=""/>
+                        <img src={`http://img.pokemondb.net/artwork/${reason}.jpg`} alt=""/>
                     </div>)}
                  </div>
 }
