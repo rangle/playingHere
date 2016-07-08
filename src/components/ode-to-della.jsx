@@ -34,6 +34,10 @@ export default class ClassyDella extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({greatReasons: nextProps.reasons});
+  }
+
   filterReasons = (event) =>
 
   //setState exists on all react components, it overwrites the state that currently
@@ -53,6 +57,7 @@ export default class ClassyDella extends React.Component {
   render = () => <div style={this.myStyle.topStyle}>
                     <h3>Della is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
+                    {this.state.greatReasons.length ? '' : <div> Stuff is loading, hold up</div>}
                     {this.state.greatReasons.map(reason => <h4 style={this.myStyle.rowStyle}>{reason}</h4>)}
                  </div>
 }

@@ -15,6 +15,20 @@ const listOfArtistsTop5 = [{name:'Beyonce', location: 'Texas', link:'https://en.
 
 export default class Main extends React.Component {
 
+
+  constructor(){
+    super();
+    this.state = {
+      dellaReasons: []
+    }
+  }
+
+  getData = () => $.get('http://beta.json-generator.com/api/json/get/41ffVawIb?delay=5000');
+
+  componentDidMount(){
+    this.getData().then(res => this.setState({dellaReasons: res}));
+  }
+
   render() {
 
     return  <div id="root-container">
