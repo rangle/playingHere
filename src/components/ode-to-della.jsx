@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {PropTypes, Component} from 'react';
 
-export default class ClassyDella extends React.Component {
+export default class ClassyDella extends Component {
 
 
   myStyle = {
@@ -21,6 +21,17 @@ export default class ClassyDella extends React.Component {
     }
   };
 
+  static propTypes = {
+    reasons: React.PropTypes.array,
+    name: React.PropTypes.object
+    };
+
+  static defaultProps = {
+    name: {
+      first: 'Della'
+    }
+  };
+
   //in classes, a constructor is called always, right when the class is being created
   //in this case, we want to access the props which are passed in, 'super' which basically just
   //says ignore whatever constructor this class was inherited from, I'm talking about me,
@@ -34,9 +45,17 @@ export default class ClassyDella extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({greatReasons: nextProps.reasons});
+  setLocalReason = (event) => this.setState({
+    localReason: event.target.value
+  });
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      greatReasons: nextProps.reasons
+    })
   }
+
+   saveReasonAction = () => this.props.addReasonAction(this.state.localReason);
 
   filterReasons = (event) =>
 
@@ -55,13 +74,10 @@ export default class ClassyDella extends React.Component {
 
   //onChange accepts a function, uncalled, and when it is called it passes in an event
   render = () => <div style={this.myStyle.topStyle}>
-                    <h3>Della is great for these reasons:</h3>
+                    <h3><span className="name">{this.props.name.first}</span> is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
-                    {this.state.greatReasons.length ? '' : <div> Stuff is loading, hold up</div>}
-                    {this.state.greatReasons.map(reason => 
-                      <div>
-                      <h4 style={this.myStyle.rowStyle}>{reason}</h4>
-                        <img src={`http://img.pokemondb.net/artwork/${reason}.jpg`} alt=""/>
-                    </div>)}
+                    {this.state.greatReasons.map((reason, i) => <h4 key={i} style={this.myStyle.rowStyle}>{reason}</h4>)}
+                    <input type="text" onChange={this.setLocalReason}/>
+                    <button onClick={this.saveReasonAction}>Add Reason</button>
                  </div>
 }
