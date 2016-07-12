@@ -56,6 +56,8 @@ export default class ClassyDella extends Component {
   }
 
    saveReasonAction = () => this.props.addReasonAction(this.state.localReason);
+  
+  removeAction = (reasonText) => (event) => this.props.removeReasonAction(reasonText);
 
   filterReasons = (event) =>
 
@@ -76,7 +78,9 @@ export default class ClassyDella extends Component {
   render = () => <div style={this.myStyle.topStyle}>
                     <h3><span className="name">{this.props.name.first}</span> is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
-                    {this.state.greatReasons.map((reason, i) => <h4 key={i} style={this.myStyle.rowStyle}>{reason}</h4>)}
+                    {this.state.greatReasons.map((reason, i) => 
+                      <div><h4 key={i} style={this.myStyle.rowStyle}>{reason}</h4> <button onClick={this.removeAction(reason)}>Remove</button></div>
+                    )}
                     <input type="text" onChange={this.setLocalReason}/>
                     <button onClick={this.saveReasonAction}>Add Reason</button>
                  </div>

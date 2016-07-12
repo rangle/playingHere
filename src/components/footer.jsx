@@ -15,8 +15,8 @@ export default class FooterComponent extends React.Component {
 
   myStyle = {
     imgSize: {
-      width: '80',
-      height: '80'
+      width: '80px',
+      height: '80px'
     },
     centerText: {
       textAlign: 'center'
@@ -26,13 +26,13 @@ export default class FooterComponent extends React.Component {
       color: 'white',
       margin: '40px auto 0 auto',
       width: '100%',
-      padding: '30'
+      padding: '30px'
     },
     hrWidth:{
       width:'40%'
     },
     bodyStyles:{
-      marginTop:'35',
+      marginTop:'35px',
       margin:'0 auto'
     },
     paragraph:{
