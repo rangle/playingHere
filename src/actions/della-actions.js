@@ -4,3 +4,10 @@ export function addReason(reason){
     data: reason
   }
 }
+
+export function removeReason(reasonText){
+  return {
+    type: 'REMOVE_REASON',
+    data: reasonText
+  }
+}
