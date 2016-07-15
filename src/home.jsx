@@ -5,6 +5,7 @@ import ArtistList from './components/artist-list.jsx';
 import CityListing from './components/city-list.jsx'
 import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
+import ClassyDella from './components/ode-to-della.jsx';
 
 const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 const listOfArtistsTop5 = [{name:'Beyonce', location: 'Texas', link:'https://en.wikipedia.org/wiki/Beyonc%C3%A9', imgLink:'https://cbsradionews.files.wordpress.com/2016/02/beyonce-super-bowl-50.jpg', bio:'Beyoncé Giselle Knowles-Carter born September 4, 1981) is an American singer, songwriter, record producer and actress. Born and raised in Houston, Texas, she performed in various singing and dancing competitions as a child and rose to fame in the late 1990s as lead singer of R&B girl-group Destiny\'s Child. Managed by her father, Mathew Knowles, the group became one of the world\'s best-selling girl groups of all time. Their hiatus saw the release of Beyoncé\'s debut album, Dangerously in Love (2003), which established her as a solo artist worldwide, earned five Grammy Awards and featured the Billboard Hot 100 number-one singles "Crazy in Love" and "Baby Boy".'},
@@ -14,6 +15,22 @@ const listOfArtistsTop5 = [{name:'Beyonce', location: 'Texas', link:'https://en.
 {name:'Drake', location: 'Toronto', link:'https://en.wikipedia.org/wiki/Rihanna',  imgLink:'https://media.gq.com/photos/566f53b622c04e90668117ae/master/pass/Swerves-of-2015-drake-hotline-bling.jpg', bio:'Aubrey Drake Graham (born October 24, 1986),[2] better known as Drake, is a Canadian rapper, singer, songwriter, record producer and actor, born and raised in Toronto, Ontario.[3] He first garnered recognition for his role as Jimmy Brooks on the television series Degrassi: The Next Generation. He later rose to prominence as a rapper, releasing several independent mixtapes before signing to Lil Wayne\'s Young Money Entertainment in June 2009.[4] Drake\'s EP, So Far Gone (2009), spawned the singles "Best I Ever Had" and Im Goin In, which reached the top ten of the U.S. Billboard Hot 100.'}];
 
 export default class Main extends React.Component {
+
+
+  constructor(){
+    super();
+    this.state = {
+      dellaReasons: []
+    }
+  }
+
+  getData = () => $.get('http://pokeapi.co/api/v2/pokemon?limit=811');
+
+  componentDidMount(){
+    this.getData().then(res => {
+      this.setState({dellaReasons: res.results.map(pokemon => pokemon.name)})
+    });
+  }
 
   render() {
 
