@@ -7,6 +7,8 @@ import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
 
+import { Router, Route, Link, hashHistory } from 'react-router';
+
 //Redux stuffs
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -95,7 +97,14 @@ const App = connect(mapStateToProps, mapDispatchToProps)(Main);
 
 ReactDOM.render(
   <Provider store={ store }>
-    <App />
+    <Router history={hashHistory}>
+      {/* The solution was using hash history vs browser history - as hashhistory works without a server
+      will be a good idea to set up a proper server, as browser history is much nicer to navigate through, but for now, this
+      works
+      */}
+      <Route path="/" component={App} />
+      <Route path="/test" component={Della} />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
