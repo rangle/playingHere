@@ -40,15 +40,15 @@ export default class Main extends React.Component {
   constructor(){
     super();
     this.state = {
-      dellaReasons: []
+      reasons: []
     }
   }
 
-  getData = () => $.get('http://pokeapi.co/api/v2/pokemon?limit=811');
+  getData = () => $.get('http://pokeapi.co/api/v2/pokemon?limit=20');
 
   componentDidMount(){
     this.getData().then(res => {
-      this.setState({dellaReasons: res.results.map(pokemon => pokemon.name)})
+      this.setState({reasons: res.results.map(pokemon => pokemon.name)})
     });
   }
 
@@ -57,6 +57,7 @@ export default class Main extends React.Component {
     return  <div id="root-container">
                 <HeaderComponent title='Playing Here' />
                 <section>
+                  <Della {...this.state} />
                   <div className="container">
                     <div className="row">
                       <CityListing cities={cityList} />
