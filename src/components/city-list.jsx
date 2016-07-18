@@ -4,13 +4,17 @@ export default class CityListing extends React.Component {
 
   myStyle = {
     searchform: {
-      padding: '20px',
+      padding: '10px',
       width: '100%',
       border: '1px solid #f4f4f4',
       borderLeft: 'none',
       borderRight: 'none'
-    }
+    },
 
+    rowStyle: {
+      display: 'block',
+      cursor: 'pointer'
+    }
   };
 
   constructor(props){
@@ -28,8 +32,8 @@ export default class CityListing extends React.Component {
     });
 
   render = () => <div className="col-md-4">
-                  <h3>Top 5 Cities:</h3>
-                  <input style={this.myStyle.searchform} type="text" placeholder="Search cities..." onChange={this.filterCities}/>
-                    {this.state.cityNames.map((city, i) => <h4 key={i} style={this.myStyle.rowStyle}>{city}</h4>)}
+                    <h3>Top 5 Favourite Cities:</h3>
+                    <input style={this.myStyle.searchform} type="text" placeholder="Search cities..." onChange={this.filterCities}/>
+                    {this.state.cityNames.map((city, i) => <a key={i} style={this.myStyle.rowStyle}>{city}</a>)}
                  </div>
 }

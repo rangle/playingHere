@@ -47,7 +47,6 @@ function mapDispatchToProps(dispatch){
 
 export default class Main extends React.Component {
 
-
   constructor(){
     super();
     this.state = {
