@@ -1,7 +1,6 @@
-import {addReason, removeReason} from './della-actions';
+import * as reasonActions from './della-actions';
+ 
 
-
-export {
-  addReason,
-  removeReason
+export default {
+ reasonActions
 };

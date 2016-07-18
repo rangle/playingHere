@@ -11,3 +11,10 @@ export function removeReason(reasonText){
     data: reasonText
   }
 }
+
+export function setAllReasons(reasonsArray){
+  return {
+    type: 'SET_REASONS',
+    data: reasonsArray
+  }
+}

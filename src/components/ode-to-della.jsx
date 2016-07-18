@@ -29,7 +29,8 @@ export default class ClassyDella extends Component {
   static defaultProps = {
     name: {
       first: 'Della'
-    }
+    },
+    reasons: []
   };
 
   //in classes, a constructor is called always, right when the class is being created
@@ -49,15 +50,18 @@ export default class ClassyDella extends Component {
     localReason: event.target.value
   });
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.setState({
       greatReasons: nextProps.reasons
     })
   }
 
-   saveReasonAction = () => this.props.addReasonAction(this.state.localReason);
-  
-  removeAction = (reasonText) => (event) => this.props.removeReasonAction(reasonText);
+   saveReasonAction = () => {
+     this.props.addReason(this.state.localReason);
+     this.refs.addReasonInput.value = '';
+   };
+
+  removeAction = (reasonText) => (event) => this.props.removeReason(reasonText);
 
   filterReasons = (event) =>
 
@@ -70,18 +74,20 @@ export default class ClassyDella extends Component {
       //a value from the event.target.value (which is the value in the input) - if true
       //the reason is kept in the new list, which is set on this.state.greatReasons
       greatReasons: this.props.reasons
-        .filter(reason => reason.toLowerCase()
-        .includes(event.target.value.toLowerCase()))
-    });
+        .filter(reason => reason.toLowerCase().includes(event.target.value.toLowerCase()))});
 
   //onChange accepts a function, uncalled, and when it is called it passes in an event
   render = () => <div style={this.myStyle.topStyle}>
                     <h3><span className="name">{this.props.name.first}</span> is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
-                    {this.state.greatReasons.map((reason, i) => 
-                      <div><h4 key={i} style={this.myStyle.rowStyle}>{reason}</h4> <button onClick={this.removeAction(reason)}>Remove</button></div>
+                    {!this.state.greatReasons.length ? <h2>Loading...</h2> : '' }
+                    {this.state.greatReasons.map((reason, i) =>
+                      <div key={i}>
+                        <h4 style={this.myStyle.rowStyle}>{reason}</h4> 
+                        <button onClick={this.removeAction(reason)}>Remove</button>
+                      </div>
                     )}
-                    <input type="text" onChange={this.setLocalReason}/>
+                    <input type="text" ref="addReasonInput" onChange={this.setLocalReason}/>
                     <button onClick={this.saveReasonAction}>Add Reason</button>
                  </div>
 }

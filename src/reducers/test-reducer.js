@@ -1,7 +1,7 @@
 import {fromJS, Set} from 'immutable';
 
 const INITIAL_STATE = fromJS({
-  reasonsForGreatness: Set(['Handsome', 'Smart', 'Funny', 'Reduxable'])
+  reasonsForGreatness: Set([])
 });
 
 function testReducer(state = INITIAL_STATE, action = {}) {
@@ -13,6 +13,9 @@ function testReducer(state = INITIAL_STATE, action = {}) {
 
     case 'REMOVE_REASON':
       return state.update('reasonsForGreatness', reasons => reasons.remove(action.data));
+
+    case 'SET_REASONS':
+      return state.set('reasonsForGreatness', Set(action.data));
 
     default:
       return state;

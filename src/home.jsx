@@ -8,28 +8,37 @@ import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
 
 //Redux stuffs
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers/index';
 import { connect } from 'react-redux';
-
-import * as allActions from './actions/index';
+import createLogger from 'redux-logger';
+import allActions from './actions/index';
 
 const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 
 
-
+//This is where we access all the props from the global state, and specify how we want them to be accessible
+//for example, there is a reducer called 'test' which contains some of the information required for the Della component
+//on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
+//this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
+//so we specify that on this.props.reasons, we want the pure JS verson of that data.
 function mapStateToProps({test, artist}) {
   return {
-    dellaReasons: test.get('reasonsForGreatness').toJS(),
+    reasons: test.get('reasonsForGreatness').toJS(),
     artistList: artist.get('list').toJS()
   }
 }
 
+
+//In this method, we access the actions from the allActions file, where all actions are then grouped by their categories
+//ie, 'reasonActions', and on those categories we have specific actions, ie 'addReason' - once accessed, we decide how they are
+//applied to the props of this component, - this.props.addReason(reason) will call dispatch(allActions.reasonActions.addReason(reason))
 function mapDispatchToProps(dispatch){
   return {
-    addReason: (reason) => dispatch(allActions.addReason(reason)),
-    removeReason: (reasonText) => dispatch(allActions.removeReason(reasonText))
+    addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
+    removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
+    setReasons: (reasonArray) => dispatch(allActions.reasonActions.setAllReasons(reasonArray))
 
   }
 }
@@ -44,12 +53,10 @@ export default class Main extends React.Component {
     }
   }
 
-  getData = () => $.get('http://pokeapi.co/api/v2/pokemon?limit=20');
+  getData = () => $.get('http://beta.json-generator.com/api/json/get/Vk27QAP8Z?delay=1500');
 
   componentDidMount(){
-    this.getData().then(res => {
-      this.setState({reasons: res.results.map(pokemon => pokemon.name)})
-    });
+    this.getData().then(res => this.props.setReasons(res));
   }
 
   render() {
@@ -57,7 +64,9 @@ export default class Main extends React.Component {
     return  <div id="root-container">
                 <HeaderComponent title='Playing Here' />
                 <section>
-                  <Della {...this.state} />
+                  {/*  Notice my spread operator on this.state - all properties on that
+                  object are now available as props internally, inside my Della Component  */}
+                  <Della { ...this.props } />
                   <div className="container">
                     <div className="row">
                       <CityListing cities={cityList} />
@@ -74,7 +83,12 @@ export default class Main extends React.Component {
 }
 
 const rootReducer = combineReducers(reducers);
-const store = createStore(rootReducer, {});
+const store = createStore(
+  rootReducer, //This is the combination of all your reducers, created above using combineReducers
+  {}, //This is the 'initial state', you can specify through this what you might want your initial state to look like
+  applyMiddleware(createLogger()), //This is where you provide all the middleware you want to use, right now just logger
+  window.devToolsExtension ? window.devToolsExtension() : f => f //this is what lets redux devtools work
+);
 
 
 const App = connect(mapStateToProps, mapDispatchToProps)(Main);
