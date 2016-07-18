@@ -7,7 +7,7 @@ import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
 
-import { Router, Route, Link, hashHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 
 //Redux stuffs
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import * as reducers from './reducers/index';
 import { connect } from 'react-redux';
 import createLogger from 'redux-logger';
+import ReduxThunk from 'redux-thunk'
 import allActions from './actions/index';
 
 const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
@@ -25,10 +26,10 @@ const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 //on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
 //this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
 //so we specify that on this.props.reasons, we want the pure JS verson of that data.
-function mapStateToProps({test, artist}) {
+function mapStateToProps(state) {
   return {
-    reasons: test.get('reasonsForGreatness').toJS(),
-    artistList: artist.get('list').toJS()
+    reasons: state.test.get('reasonsForGreatness').toJS(),
+    artistList: state.artist.get('list').toJS()
   }
 }
 
@@ -40,8 +41,7 @@ function mapDispatchToProps(dispatch){
   return {
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
-    setReasons: (reasonArray) => dispatch(allActions.reasonActions.setAllReasons(reasonArray))
-
+    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons())
   }
 }
 
@@ -55,10 +55,9 @@ export default class Main extends React.Component {
     }
   }
 
-  getData = () => $.get('http://beta.json-generator.com/api/json/get/Vk27QAP8Z?delay=1500');
 
   componentDidMount(){
-    this.getData().then(res => this.props.setReasons(res));
+     this.props.getReasons();
   }
 
   render() {
@@ -68,7 +67,7 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  <Della { ...this.props } />
+                  { /* <Della { ...this.props } /> */}
                   <div className="container">
                     <div className="row">
                       <CityListing cities={cityList} />
@@ -88,7 +87,7 @@ const rootReducer = combineReducers(reducers);
 const store = createStore(
   rootReducer, //This is the combination of all your reducers, created above using combineReducers
   {}, //This is the 'initial state', you can specify through this what you might want your initial state to look like
-  applyMiddleware(createLogger()), //This is where you provide all the middleware you want to use, right now just logger
+  applyMiddleware(ReduxThunk, createLogger()), //This is where you provide all the middleware you want to use, right now just logger
   window.devToolsExtension ? window.devToolsExtension() : f => f //this is what lets redux devtools work
 );
 
