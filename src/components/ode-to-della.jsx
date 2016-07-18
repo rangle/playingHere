@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {PropTypes, Component} from 'react';
 
-export default class ClassyDella extends React.Component {
+export default class ClassyDella extends Component {
 
 
   myStyle = {
@@ -21,6 +21,18 @@ export default class ClassyDella extends React.Component {
     }
   };
 
+  static propTypes = {
+    reasons: React.PropTypes.array,
+    name: React.PropTypes.object
+    };
+
+  static defaultProps = {
+    name: {
+      first: 'Della'
+    },
+    reasons: []
+  };
+
   //in classes, a constructor is called always, right when the class is being created
   //in this case, we want to access the props which are passed in, 'super' which basically just
   //says ignore whatever constructor this class was inherited from, I'm talking about me,
@@ -34,9 +46,22 @@ export default class ClassyDella extends React.Component {
     }
   }
 
+  setLocalReason = (event) => this.setState({
+    localReason: event.target.value
+  });
+
   componentWillReceiveProps(nextProps) {
-    this.setState({greatReasons: nextProps.reasons});
+    this.setState({
+      greatReasons: nextProps.reasons
+    })
   }
+
+   saveReasonAction = () => {
+     this.props.addReason(this.state.localReason);
+     this.refs.addReasonInput.value = '';
+   };
+
+  removeAction = (reasonText) => (event) => this.props.removeReason(reasonText);
 
   filterReasons = (event) =>
 
@@ -49,19 +74,20 @@ export default class ClassyDella extends React.Component {
       //a value from the event.target.value (which is the value in the input) - if true
       //the reason is kept in the new list, which is set on this.state.greatReasons
       greatReasons: this.props.reasons
-        .filter(reason => reason.toLowerCase()
-        .includes(event.target.value.toLowerCase()))
-    });
+        .filter(reason => reason.toLowerCase().includes(event.target.value.toLowerCase()))});
 
   //onChange accepts a function, uncalled, and when it is called it passes in an event
   render = () => <div style={this.myStyle.topStyle}>
-                    <h3>Della is great for these reasons:</h3>
+                    <h3><span className="name">{this.props.name.first}</span> is great for these reasons:</h3>
                     <input type="text" onChange={this.filterReasons}/>
-                    {this.state.greatReasons.length ? '' : <div> Stuff is loading, hold up</div>}
-                    {this.state.greatReasons.map(reason => 
-                      <div>
-                      <h4 style={this.myStyle.rowStyle}>{reason}</h4>
-                        <img src={`http://img.pokemondb.net/artwork/${reason}.jpg`} alt=""/>
-                    </div>)}
+                    {!this.state.greatReasons.length ? <h2>Loading...</h2> : '' }
+                    {this.state.greatReasons.map((reason, i) =>
+                      <div key={i}>
+                        <h4 style={this.myStyle.rowStyle}>{reason}</h4> 
+                        <button onClick={this.removeAction(reason)}>Remove</button>
+                      </div>
+                    )}
+                    <input type="text" ref="addReasonInput" onChange={this.setLocalReason}/>
+                    <button onClick={this.saveReasonAction}>Add Reason</button>
                  </div>
 }

@@ -30,6 +30,6 @@ export default class CityListing extends React.Component {
   render = () => <div className="col-md-4">
                   <h3>Top 5 Cities:</h3>
                   <input style={this.myStyle.searchform} type="text" placeholder="Search cities..." onChange={this.filterCities}/>
-                    {this.state.cityNames.map(city => <h4 style={this.myStyle.rowStyle}>{city}</h4>)}
+                    {this.state.cityNames.map((city, i) => <h4 key={i} style={this.myStyle.rowStyle}>{city}</h4>)}
                  </div>
 }
