@@ -18,8 +18,6 @@ import createLogger from 'redux-logger';
 import ReduxThunk from 'redux-thunk'
 import allActions from './actions/index';
 
-const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
-
 
 //This is where we access all the props from the global state, and specify how we want them to be accessible
 //for example, there is a reducer called 'test' which contains some of the information required for the Della component
@@ -29,7 +27,9 @@ const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
-    artistList: state.artist.get('list').toJS()
+    artistList: state.artist.get('list').toJS(),
+    cities: state.cities.get('list').toJS(),
+    selectedCity: state.cities.get('selected').toJS()
   }
 }
 
@@ -41,7 +41,8 @@ function mapDispatchToProps(dispatch){
   return {
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
-    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons())
+    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
+    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
   }
 }
 
@@ -70,8 +71,8 @@ export default class Main extends React.Component {
                   { /* <Della { ...this.props } /> */}
                   <div className="container">
                     <div className="row">
-                      <CityListing cities={cityList} />
-                      <MapComponent lat={43.652644} long={-79.381769} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
+                      <CityListing {...this.props} />
+                      <MapComponent lat={this.props.selectedCity.location.lat} long={this.props.selectedCity.location.lng} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
                     </div>
                   </div>
                 </section>
@@ -87,7 +88,7 @@ const rootReducer = combineReducers(reducers);
 const store = createStore(
   rootReducer, //This is the combination of all your reducers, created above using combineReducers
   {}, //This is the 'initial state', you can specify through this what you might want your initial state to look like
-  applyMiddleware(ReduxThunk, createLogger()), //This is where you provide all the middleware you want to use, right now just logger
+  applyMiddleware(ReduxThunk, createLogger({stateTransformer: (state) => Object.keys(state).map(key => ({val: state[key].toJS(), key})).reduce((p, n) => Object.assign({}, p, {[n.key]: n.val}), {}) })), //This is where you provide all the middleware you want to use, right now just logger
   window.devToolsExtension ? window.devToolsExtension() : f => f //this is what lets redux devtools work
 );
 

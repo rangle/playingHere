@@ -10,6 +10,8 @@ myStyle = {
   }
 };
 
+  mapObj;
+
 initMap = () =>
 {
 
@@ -19,13 +21,18 @@ let mapProp = {
  mapTypeId: this.props.mapType
 };
 // this.ref is referencing the DOM element(used instead of getElement)
-let map = new google.maps.Map(this.refs.myMap, mapProp);
+this.mapObj = new google.maps.Map(this.refs.myMap, mapProp);
 
 };
 
 // this is basically saying the component is working so render
-componentDidMount = () => this.initMap();
+  componentDidMount = () => this.initMap();
 
+
+
+  componentWillReceiveProps(nextProps) {
+    this.mapObj.setCenter(new google.maps.LatLng(nextProps.lat, nextProps.long), this.props.zoom);
+  }
 
 
   render() {
