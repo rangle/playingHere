@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HeaderComponent from './components/header.jsx';
 import ArtistList from './components/artist-list.jsx';
+import ArtistSearch from './components/artist-search.jsx';
 import CityListing from './components/city-list.jsx'
 import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
@@ -29,7 +30,8 @@ const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
 function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
-    artistList: state.artist.get('list').toJS()
+    artistList: state.artist.get('list').toJS(),
+    artistsSearched: state.artistsearch.get('searchList').toJS()
   }
 }
 
@@ -41,7 +43,8 @@ function mapDispatchToProps(dispatch){
   return {
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
-    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons())
+    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
+    doSearch: () => dispatch(allActions.artistActions.doASearch())
   }
 }
 
@@ -57,7 +60,8 @@ export default class Main extends React.Component {
 
 
   componentDidMount(){
-     this.props.getReasons();
+    this.props.getReasons();
+    this.props.doSearch();
   }
 
   render() {
@@ -67,7 +71,7 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  { /* <Della { ...this.props } /> */}
+                  <Della { ...this.props } />
                   <div className="container">
                     <div className="row">
                       <CityListing cities={cityList} />
@@ -75,7 +79,7 @@ export default class Main extends React.Component {
                     </div>
                   </div>
                 </section>
-                <ArtistList listIn={this.props.artistList}/>
+                <ArtistSearch/>
                 <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
                   body='Amy Tang, Chanelle Francis, Janelle Hinds and Tiffany Nogueira'
                   MentorName='Abdella Ali' MentorImg='della.jpeg'/>
