@@ -48,7 +48,6 @@ function mapDispatchToProps(dispatch){
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
     setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
-    setReasons: (reasonArray) => dispatch(allActions.reasonActions.setAllReasons(reasonArray))
   }
 }
 
