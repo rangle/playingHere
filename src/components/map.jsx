@@ -30,23 +30,22 @@ this.mapObj = new google.maps.Map(this.refs.myMap, mapProp);
 const submit = document.getElementById('submit');
 const geolocation = document.getElementById('geolocation');
 let city = document.getElementById('cityInput');
-let geocoder = new google.maps.Geocoder();
+this.geocoder = new google.maps.Geocoder();
 const autocomplete = new google.maps.places.Autocomplete(city);
         autocomplete.bindTo('bounds', this.mapObj);
 
-submit.addEventListener('click', ()=>{
-this.geocodeAddress(geocoder, this.mapObj);
-});
 
 geolocation.addEventListener('click', () => {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-          alert ("Geolocation is not supported by this browser.");
-      }
+  navigator.geolocation.getCurrentPosition((position) => {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.mapObj.setCenter(new google.maps.LatLng(pos.lat, pos.lng), this.props.zoom);
 });
 
 
+});
 };
 
 
@@ -86,7 +85,7 @@ let address = document.getElementById('cityInput').value;
     <div class="input-group">
       <input type="text" class="form-control"id="cityInput"  placeholder="City Name" style={this.myStyle.inputSize} />
       <span class="input-group-btn">
-        <button class="btn btn-secondary" id="submit" type="button">Submit</button>
+        <button class="btn btn-secondary" id="submit" onClick= {() => this.geocodeAddress(this.geocoder, this.mapObj)} type="button">Submit</button>
         <button class="btn btn-secondary" id="geolocation" type="button">Current Location</button>
       </span>
     </div>
