@@ -7,6 +7,10 @@ myStyle = {
     width: '100%',
     height: '400px',
     margin:'0 auto 30px auto'
+  },
+  inputSize: {
+    width: '50%',
+    marginBottom:'10px'
   }
 };
 
@@ -23,11 +27,23 @@ let mapProp = {
 // this.ref is referencing the DOM element(used instead of getElement)
 this.mapObj = new google.maps.Map(this.refs.myMap, mapProp);
 
-let submit = document.getElementById('submit');
+const submit = document.getElementById('submit');
+const geolocation = document.getElementById('geolocation');
+let city = document.getElementById('cityInput');
 let geocoder = new google.maps.Geocoder();
+const autocomplete = new google.maps.places.Autocomplete(city);
+        autocomplete.bindTo('bounds', this.mapObj);
 
 submit.addEventListener('click', ()=>{
 this.geocodeAddress(geocoder, this.mapObj);
+});
+
+geolocation.addEventListener('click', () => {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+          alert ("Geolocation is not supported by this browser.");
+      }
 });
 
 
@@ -67,11 +83,17 @@ let address = document.getElementById('cityInput').value;
   render() {
     return (
     <div className="col-md-8">
-      <input id="cityInput" type="text" className="form-control input-lg" />
-      <input id="submit" type="submit" className="btn btn-default btn-lg"/>
+    <div class="input-group">
+      <input type="text" class="form-control"id="cityInput"  placeholder="City Name" style={this.myStyle.inputSize} />
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" id="submit" type="button">Submit</button>
+        <button class="btn btn-secondary" id="geolocation" type="button">Current Location</button>
+      </span>
+    </div>
       <div id="googleMap" ref="myMap" style={this.myStyle.mapSize}>
       </div>
     </div>
+
     )
   }
 }
