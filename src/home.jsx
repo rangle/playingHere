@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch){
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
-    doSearch: () => dispatch(allActions.artistActions.doASearch())
+    doASearch: () => dispatch(allActions.artistActions.doASearch())
   }
 }
 
@@ -61,7 +61,6 @@ export default class Main extends React.Component {
 
   componentDidMount(){
     this.props.getReasons();
-    this.props.doSearch();
   }
 
   render() {
@@ -79,7 +78,7 @@ export default class Main extends React.Component {
                     </div>
                   </div>
                 </section>
-                <ArtistSearch/>
+                <ArtistSearch  { ...this.props }/>
                 <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
                   body='Amy Tang, Chanelle Francis, Janelle Hinds and Tiffany Nogueira'
                   MentorName='Abdella Ali' MentorImg='della.jpeg'/>
