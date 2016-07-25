@@ -31,4 +31,3 @@ export default function cityReducer(state = INITIAL_STATE, action = {}) {
   }
 
 }
-
