@@ -9,10 +9,7 @@ function setResults(peopleArray){
 }
 
 export function doASearch(nameToSearch) {
-  console.log("in"+ nameToSearch);
-
   var url=SEARCH_ENDPOINT_BEGIN+nameToSearch+SEARCH_ENDPOINT_END;
-  console.log('url is '+ url);
   return (dispatch) =>
   $.get(url)
   .then(res =>
