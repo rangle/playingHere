@@ -15,34 +15,53 @@ import { Provider } from 'react-redux';
 import * as reducers from './reducers/index';
 import { connect } from 'react-redux';
 import createLogger from 'redux-logger';
+import ReduxThunk from 'redux-thunk';
 import allActions from './actions/index';
 
-const cityList = ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA'];
-
-
 //This is where we access all the props from the global state, and specify how we want them to be accessible
-//for example, there is a reducer called 'test' which contains some of the information required for the Della component
-//on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
-//this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
-//so we specify that on this.props.reasons, we want the pure JS verson of that data.
-function mapStateToProps({test, artist}) {
+  //for example, there is a reducer called 'test' which contains some of the information required for the Della component
+  //on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
+  //this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
+  //so we specify that on this.props.reasons, we want the pure JS verson of that data.
+
+function mapStateToProps(state) {
   return {
-    reasons: test.get('reasonsForGreatness').toJS(),
-    artistList: artist.get('list').toJS()
+    reasons: state.test.get('reasonsForGreatness').toJS(),
+    artistList: state.artist.get('list').toJS(),
+    cities: state.cities.get('list').toJS(),
+    selectedCity: state.cities.get('selected').toJS()
   }
 }
-
+// You might see it also written in this way:
+  // function mapStateToProps({test, artist}) {
+  //   return {
+  //     reasons: test.get('reasonsForGreatness').toJS(),
+  //     artistList: artist.get('list').toJS()
+  //      ...
+  //   }
+  // }
 
 //In this method, we access the actions from the allActions file, where all actions are then grouped by their categories
-//ie, 'reasonActions', and on those categories we have specific actions, ie 'addReason' - once accessed, we decide how they are
-//applied to the props of this component, - this.props.addReason(reason) will call dispatch(allActions.reasonActions.addReason(reason))
+  //ie, 'reasonActions', and on those categories we have specific actions, ie 'addReason' - once accessed, we decide how they are
+  //applied to the props of this component, - this.props.addReason(reason) will call dispatch(allActions.reasonActions.addReason(reason))
 function mapDispatchToProps(dispatch){
   return {
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
-    setReasons: (reasonArray) => dispatch(allActions.reasonActions.setAllReasons(reasonArray))
-
+    getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
+    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj)),
   }
+}
+
+function getInitialState() {
+  return {
+    favorites: favorites,
+    currentAddress: 'Paris, France',
+    mapCoordinates: {
+      lat: 48.856614,
+      lng: 2.3522219
+    }
+  };
 }
 
 export default class Main extends React.Component {
@@ -50,7 +69,11 @@ export default class Main extends React.Component {
   constructor(){
     super();
     this.state = {
-      reasons: []
+      reasons: [],
+      mapCoordinates: {
+        lat: lat,
+        lng: lng
+      }
     }
   }
 
@@ -67,11 +90,13 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  <Della { ...this.props } />
+                  {/*<Della { ...this.props } />*/}
                   <div className="container">
                     <div className="row">
-                      <CityListing cities={cityList} />
-                      <MapComponent lat={43.652644} long={-79.381769} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
+                      <CityListing {...this.props} />
+
+                      <MapComponent lat={this.props.selectedCity.location.lat} long={this.props.selectedCity.location.lng} zoom={13} mapType={google.MapTypeId.ROADMAP}/>
+
                     </div>
                   </div>
                 </section>
@@ -87,7 +112,7 @@ const rootReducer = combineReducers(reducers);
 const store = createStore(
   rootReducer, //This is the combination of all your reducers, created above using combineReducers
   {}, //This is the 'initial state', you can specify through this what you might want your initial state to look like
-  applyMiddleware(createLogger()), //This is where you provide all the middleware you want to use, right now just logger
+  applyMiddleware(ReduxThunk, createLogger({stateTransformer: (state) => Object.keys(state).map(key => ({val: state[key].toJS(), key})).reduce((p, n) => Object.assign({}, p, {[n.key]: n.val}), {}) })), //This is where you provide all the middleware you want to use, right now just logger
   window.devToolsExtension ? window.devToolsExtension() : f => f //this is what lets redux devtools work
 );
 

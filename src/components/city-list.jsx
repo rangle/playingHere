@@ -17,23 +17,32 @@ export default class CityListing extends React.Component {
     }
   };
 
+  static propTypes = {
+    cities: React.PropTypes.array
+  };
+
   constructor(props){
     super(props);
     this.state = {
-      cityNames: props.cities
+      cities: props.cities
     }
   }
 
   filterCities = (event) =>
     this.setState({
-      cityNames: this.props.cities
-        .filter(city => city.toLowerCase()
+      cities: this.props.cities
+        .filter(cityObj => cityObj.label.toLowerCase() //Where did label come from?
         .includes(event.target.value.toLowerCase()))
     });
 
   render = () => <div className="col-md-4">
                     <h3>Top 5 Favourite Cities:</h3>
                     <input style={this.myStyle.searchform} type="text" placeholder="Search cities..." onChange={this.filterCities}/>
-                    {this.state.cityNames.map((city, i) => <a key={i} style={this.myStyle.rowStyle}>{city}</a>)}
+                    {this.state.cities.map((city, i) =>
+                      <a key={i}
+                        onClick={() => this.props.setSelectedCity(city)}
+                        style={this.myStyle.rowStyle}>{city.label}
+                      </a>
+                    )}
                  </div>
 }
