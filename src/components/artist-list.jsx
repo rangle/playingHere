@@ -36,7 +36,6 @@ export default class ArtistList extends React.Component {
 
 
   render = () => {
-    console.log('I am rendering!', this);
 
     return <section style={this.myStyle.mainStyle} >
               <div className="container">
