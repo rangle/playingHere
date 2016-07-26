@@ -70,10 +70,10 @@ export default class Main extends React.Component {
     super();
     this.state = {
       reasons: [],
-      mapCoordinates: {
-        lat: lat,
-        lng: lng
-      }
+      // mapCoordinates: {
+      //   lat: lat,
+      //   lng: lng
+      // }
     }
   }
 
@@ -95,7 +95,7 @@ export default class Main extends React.Component {
                     <div className="row">
                       <CityListing {...this.props} />
 
-                      <MapComponent lat={this.props.selectedCity.location.lat} long={this.props.selectedCity.location.lng} zoom={13} mapType={google.MapTypeId.ROADMAP}/>
+                      <MapComponent lat={this.props.selectedCity.location.lat} long={this.props.selectedCity.location.lng} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
 
                     </div>
                   </div>
