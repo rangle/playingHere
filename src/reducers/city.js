@@ -9,7 +9,9 @@ const INITIAL_STATE = fromJS({
     }
   },
 
-list: ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA']
+  concerts: [],
+
+  list: ['Paris', 'Toronto', 'New York', 'London (UK)', 'LA']
     .map((city, i) => ({
       label: city,
       location: {
@@ -25,6 +27,9 @@ export default function cityReducer(state = INITIAL_STATE, action = {}) {
 
     case 'SELECT_CITY':
       return state.set('selected', fromJS(action.data));
+
+    case 'GET_CONCERTS':
+      return state.set('concerts', fromJS(action.data));
 
     default:
       return state;

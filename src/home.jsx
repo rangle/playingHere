@@ -8,6 +8,7 @@ import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
 import About from './components/about.jsx';
 import Shows from './components/upcoming-shows.jsx';
+import Concerts from './components/concerts.jsx';
 
 import { Router, Route, hashHistory } from 'react-router';
 
@@ -47,7 +48,8 @@ function mapDispatchToProps(dispatch){
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
-    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
+    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj)),
+    getConcerts: (lat, long) => dispatch(allActions.cityActions.getConcerts(lat, long))
   }
 }
 
@@ -81,7 +83,9 @@ export default class Main extends React.Component {
                   </div>
                 </section>
 
-                <ArtistList listIn={this.props.artistList}/>
+                <Concerts {...this.props}/>
+
+                <ArtistList listIn={this.props.artistList} />
                 
                 <Shows shows={this.props.showList} />
                 <About contributors={this.props.contributorList} />
