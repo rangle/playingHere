@@ -1,12 +1,9 @@
 import test from './test-reducer';
 import artist from './artist-reducer';
-<<<<<<< HEAD
 import artistsearch from './artist-search-reducer';
-=======
 import cities from './city';
 import contributors from './contributor-reducer.js';
 import shows from './upcomingShows-reducer.js';
->>>>>>> origin/master
 
 
 
@@ -14,11 +11,8 @@ import shows from './upcomingShows-reducer.js';
 export {
   test,
   artist,
-<<<<<<< HEAD
-  artistsearch
-=======
+  artistsearch,
   cities,
   contributors,
   shows
->>>>>>> origin/master
 };

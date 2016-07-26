@@ -32,7 +32,7 @@ function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
     artistList: state.artist.get('list').toJS(),
-    artistsSearched: state.artistsearch.get('searchList').toJS()
+    artistsSearched: state.artistsearch.get('searchList').toJS(),
     cities: state.cities.get('list').toJS(),
     selectedCity: state.cities.get('selected').toJS(),
     contributorList: state.contributors.get('list').toJS(),
@@ -84,7 +84,7 @@ export default class Main extends React.Component {
                   </div>
                 </section>
                 <ArtistSearch  { ...this.props }/>
-                <ArtistList listIn={this.props.artistList}/>  
+                <ArtistList listIn={this.props.artistList}/>
                 <Shows shows={this.props.showList} />
                 <About contributors={this.props.contributorList} />
                 <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
