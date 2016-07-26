@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch){
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
-    doASearch: () => dispatch(allActions.artistActions.doASearch())
+    doASearch: (nameToSearch) => dispatch(allActions.artistActions.doASearch(nameToSearch))
   }
 }
 
@@ -70,7 +70,7 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  <Della { ...this.props } />
+                {/* <Della { ...this.props } />*/}
                   <div className="container">
                     <div className="row">
                       <CityListing cities={cityList} />
