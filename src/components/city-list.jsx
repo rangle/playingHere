@@ -9,8 +9,10 @@ export default class CityListing extends React.Component {
       border: '1px solid #f4f4f4',
       borderLeft: 'none',
       borderRight: 'none'
+    },
+    rowStyle: {
+      cursor: 'pointer'
     }
-
   };
 
   static propTypes = {

@@ -14,7 +14,7 @@ myStyle = {
   }
 };
 
-  mapObj;
+mapObj;
 
 initMap = () =>
 {
@@ -42,9 +42,7 @@ geolocation.addEventListener('click', () => {
           lng: position.coords.longitude
         };
         this.mapObj.setCenter(new google.maps.LatLng(pos.lat, pos.lng), this.props.zoom);
-});
-
-
+  });
 });
 };
 
@@ -82,11 +80,13 @@ let address = document.getElementById('cityInput').value;
   render() {
     return (
     <div className="col-md-8">
-    <div class="input-group">
+    <div className="input-group">
       <input type="text" class="form-control"id="cityInput"  placeholder="City Name" style={this.myStyle.inputSize} />
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" id="submit" onClick= {() => this.geocodeAddress(this.geocoder, this.mapObj)} type="button">Submit</button>
-        <button class="btn btn-secondary" id="geolocation" type="button">Current Location</button>
+      <span className="input-group-btn">
+        <button className="btn btn-secondary" id="submit"
+                      onClick= {() => this.geocodeAddress(this.geocoder, this.mapObj)}
+                      type="button">Submit</button>
+        <button className="btn btn-secondary" id="geolocation" type="button">Current Location</button>
       </span>
     </div>
       <div id="googleMap" ref="myMap" style={this.myStyle.mapSize}>
