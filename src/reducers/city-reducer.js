@@ -13,10 +13,10 @@ const INITIAL_STATE = fromJS({
     .map((city, i) => ({
       label: city,
       location: {
-        lat: 48.8,
-        lng: 2.35
+        lat: 48.8 - (i / 2),
+        lng: 2.35 + (i * 1.25)
       }
-    }))
+  }))
 });
 
 export default function cityReducer(state = INITIAL_STATE, action = {}) {

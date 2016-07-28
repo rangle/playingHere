@@ -7,7 +7,7 @@ import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
 
-import { Router, Route, Link, hashHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 
 //Redux stuffs
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -15,15 +15,15 @@ import { Provider } from 'react-redux';
 import * as reducers from './reducers/index';
 import { connect } from 'react-redux';
 import createLogger from 'redux-logger';
-import ReduxThunk from 'redux-thunk';
+import ReduxThunk from 'redux-thunk'
 import allActions from './actions/index';
 
-//This is where we access all the props from the global state, and specify how we want them to be accessible
-  //for example, there is a reducer called 'test' which contains some of the information required for the Della component
-  //on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
-  //this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
-  //so we specify that on this.props.reasons, we want the pure JS verson of that data.
 
+//This is where we access all the props from the global state, and specify how we want them to be accessible
+//for example, there is a reducer called 'test' which contains some of the information required for the Della component
+//on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
+//this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
+//so we specify that on this.props.reasons, we want the pure JS verson of that data.
 function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
@@ -32,36 +32,18 @@ function mapStateToProps(state) {
     selectedCity: state.cities.get('selected').toJS()
   }
 }
-// You might see it also written in this way:
-  // function mapStateToProps({test, artist}) {
-  //   return {
-  //     reasons: test.get('reasonsForGreatness').toJS(),
-  //     artistList: artist.get('list').toJS()
-  //      ...
-  //   }
-  // }
+
 
 //In this method, we access the actions from the allActions file, where all actions are then grouped by their categories
-  //ie, 'reasonActions', and on those categories we have specific actions, ie 'addReason' - once accessed, we decide how they are
-  //applied to the props of this component, - this.props.addReason(reason) will call dispatch(allActions.reasonActions.addReason(reason))
+//ie, 'reasonActions', and on those categories we have specific actions, ie 'addReason' - once accessed, we decide how they are
+//applied to the props of this component, - this.props.addReason(reason) will call dispatch(allActions.reasonActions.addReason(reason))
 function mapDispatchToProps(dispatch){
   return {
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
-    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj)),
+    setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
   }
-}
-
-function getInitialState() {
-  return {
-    favorites: favorites,
-    currentAddress: 'Paris, France',
-    mapCoordinates: {
-      lat: 48.856614,
-      lng: 2.3522219
-    }
-  };
 }
 
 export default class Main extends React.Component {
@@ -69,18 +51,12 @@ export default class Main extends React.Component {
   constructor(){
     super();
     this.state = {
-      reasons: [],
-      // mapCoordinates: {
-      //   lat: lat,
-      //   lng: lng
-      // }
+      reasons: []
     }
   }
 
-  getData = () => $.get('http://beta.json-generator.com/api/json/get/Vk27QAP8Z?delay=1500');
-
   componentDidMount(){
-    this.getData().then(res => this.props.setReasons(res));
+     this.props.getReasons();
   }
 
   render() {
@@ -90,13 +66,11 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  {/*<Della { ...this.props } />*/}
+                  { /* <Della { ...this.props } /> */}
                   <div className="container">
                     <div className="row">
                       <CityListing {...this.props} />
-
                       <MapComponent lat={this.props.selectedCity.location.lat} long={this.props.selectedCity.location.lng} zoom={13} mapType={google.maps.MapTypeId.ROADMAP}/>
-
                     </div>
                   </div>
                 </section>

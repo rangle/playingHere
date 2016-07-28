@@ -2,7 +2,11 @@ body {
   padding: 20px;
 }
 
-section {
-  padding-top: 20px;
-  padding-bottom: 20px;
+a {
+  display: block;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
 }
