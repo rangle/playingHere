@@ -47,7 +47,8 @@ function mapDispatchToProps(dispatch){
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
-    doASearch: (nameToSearch) => dispatch(allActions.artistActions.doASearch(nameToSearch)),
+    doASpotifyArtistSearch: (nameToSearch) => dispatch(allActions.artistActions.doASpotifyArtistSearch(nameToSearch)),
+    doABITArtistSearch: (nameToSearch) => dispatch(allActions.artistActions.doABITArtistSearch(nameToSearch)),
     setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
   }
 }

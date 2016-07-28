@@ -50,9 +50,14 @@ export default class ArtistSearch extends React.Component {
     }
   }
 
-  doASearchAction = () => {
+  doASpotifyArtistSearchAction = () => {
     var searchName=this.refs.searchArtistTextBox.value;
-    this.props.doASearch(searchName);
+    this.props.doASpotifyArtistSearch(searchName);
+  }
+
+  doABITArtistSearchAction = () => {
+    var searchName=this.refs.searchArtistTextBox.value;
+    this.props.doABITArtistSearch(searchName);
   }
 
   render = () => {
@@ -61,10 +66,10 @@ export default class ArtistSearch extends React.Component {
       <div className="container">
         <h3>Search For Some Artists</h3>
         <input ref="searchArtistTextBox" type="text"/>
-        <button onClick={()=>this.doASearchAction()}>Search Artist</button>
+        <button onClick={()=>this.doASpotifyArtistSearchAction()}>Search Artist</button>
 
         {/*Table headers*/}
-        {!this.state.artistReturnedList.length ? <h4>No Results</h4> : '' }
+        {!this.state.artistReturnedList.length ? <h4>Loading...</h4> : '' }
         {this.state.artistReturnedList.length ?   <div style={this.myStyle.topRowStyle} className="row">
         <div className="col-md-4">Name</div>
         <div className="col-md-4">Image</div>
@@ -79,7 +84,11 @@ export default class ArtistSearch extends React.Component {
           <div className="col-md-4"><img style={this.myStyle.imgSize} src={artistObj.images[0].url}></img></div>
           <div className="col-md-4">{artistObj.genres[0]}</div>
         </div>)}
-          </div>
-      </section>
-    }
+
+        <div>Practiincg Bands in Town API</div>
+        <button onClick={()=>this.doABITArtistSearchAction()}>Search Artist on BIT</button>
+
+      </div>
+    </section>
   }
+}
