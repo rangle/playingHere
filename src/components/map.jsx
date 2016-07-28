@@ -7,8 +7,11 @@ myStyle = {
     width: '100%',
     height: '400px',
     margin:'0 auto 30px auto'
+  },
+  inputSize: {
+  marginBottom: '10px'
   }
-};
+  };
 
   mapObj;
 
@@ -24,7 +27,11 @@ let mapProp = {
 this.mapObj = new google.maps.Map(this.refs.myMap, mapProp);
 
 let submit = document.getElementById('submit');
-let geocoder = new google.maps.Geocoder();
+this.geocoder = new google.maps.Geocoder();
+let city = document.getElementById('cityInput');
+const autocomplete = new google.maps.places.Autocomplete(city);
+autocomplete.bindTo('bounds', this.mapObj);
+
 
 submit.addEventListener('click', ()=>{
 this.geocodeAddress(geocoder, this.mapObj);
@@ -67,8 +74,15 @@ let address = document.getElementById('cityInput').value;
   render() {
     return (
     <div className="col-md-8">
-      <input id="cityInput" type="text" className="form-control input-lg" />
-      <input id="submit" type="submit" className="btn btn-default btn-lg"/>
+    <div className="input-group" style={this.myStyle.inputSize}>
+    <input type="text" className="form-control input-lg"id="cityInput"  placeholder="City Name" />
+    <span className="input-group-btn">
+      <button className="btn btn-primary btn-lg" id="submit" onClick= {() => this.geocodeAddress(this.geocoder, this.mapObj)} type="button">
+      FIND CITY <span className="glyphicon glyphicon-search"></span></button>
+      <button className="btn btn-info btn-lg" id="geolocation" type="button">LOCATION <span className="glyphicon glyphicon-map-marker"></span></button>
+    </span>
+    </div>
+
       <div id="googleMap" ref="myMap" style={this.myStyle.mapSize}>
       </div>
     </div>
