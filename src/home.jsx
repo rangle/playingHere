@@ -71,7 +71,7 @@ export default class Main extends React.Component {
   render() {
 
     return  <div id="root-container">
-                <HeaderComponent title='Playing Here' />
+                <HeaderComponent title='Playing Here' logoImage='playing-here-logo.jpg'/>
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
