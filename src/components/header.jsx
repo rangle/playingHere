@@ -10,19 +10,33 @@ export default class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      header: this.props.title
+      header: this.props.title,
+      logoImage: this.props.logoImage
     }
   }
+
+  myStyle = {
+    containerStyles: {
+      padding: '20px'
+    },
+    logoImgSize: {
+      width: '80px',
+      height: '100px'
+    }
+  };
 
   render() {
     return (
       <header className="header">
-        <div className="container">
+        <div className="container" style={this.myStyle.containerStyles}>
           <div className="row">
-            <div className="col-md-7">
-              <h1>{ this.props.title }</h1>
+            <div className="col-md-10">
+              <h1>{this.props.title}</h1>
             </div>
-            <div className="col-md-4"></div>
+            <div className="col-md-2">
+              <a href="https://www.google.ca"><img src={"../src/images/" + this.props.logoImage} style={this.myStyle.logoImgSize}/></a>
+
+            </div>
           </div>
         </div>
       </header>
