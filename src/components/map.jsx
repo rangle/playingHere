@@ -34,7 +34,7 @@ autocomplete.bindTo('bounds', this.mapObj);
 
 
 submit.addEventListener('click', ()=>{
-this.geocodeAddress(geocoder, this.mapObj);
+this.geocodeAddress(this.geocoder, this.mapObj);
 });
 
 geolocation.addEventListener('click', () => {
