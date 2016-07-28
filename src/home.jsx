@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HeaderComponent from './components/header.jsx';
 import ArtistList from './components/artist-list.jsx';
+import ArtistSearch from './components/artist-search.jsx';
 import CityListing from './components/city-list.jsx'
 import MapComponent from './components/map.jsx'
 import FooterComponent from './components/footer.jsx'
 import Della from './components/ode-to-della.jsx';
+import About from './components/about.jsx';
+import Shows from './components/upcoming-shows.jsx';
 
 import { Router, Route, hashHistory } from 'react-router';
 
@@ -24,12 +27,16 @@ import allActions from './actions/index';
 //on that reducer there is a property called 'reasonsForGreatness' - which is an Immutable.js Set object. We want to, at
 //this point and going forward, have it be pure javascript (we don't have to do this, we can keep it immutable all the way down)
 //so we specify that on this.props.reasons, we want the pure JS verson of that data.
+
 function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
     artistList: state.artist.get('list').toJS(),
+    artistsSearched: state.artistsearch.get('searchList').toJS(),
     cities: state.cities.get('list').toJS(),
-    selectedCity: state.cities.get('selected').toJS()
+    selectedCity: state.cities.get('selected').toJS(),
+    contributorList: state.contributors.get('list').toJS(),
+    showList: state.shows.get('list').toJS()
   }
 }
 
@@ -42,12 +49,12 @@ function mapDispatchToProps(dispatch){
     addReason: (reason) => dispatch(allActions.reasonActions.addReason(reason)),
     removeReason: (reasonText) => dispatch(allActions.reasonActions.removeReason(reasonText)),
     getReasons: () => dispatch(allActions.reasonActions.asyncSetAllReasons()),
+    doASearch: (nameToSearch) => dispatch(allActions.artistActions.doASearch(nameToSearch)),
     setSelectedCity: (cityObj) => dispatch(allActions.cityActions.setSelectedCity(cityObj))
   }
 }
 
 export default class Main extends React.Component {
-
 
   constructor(){
     super();
@@ -58,7 +65,7 @@ export default class Main extends React.Component {
 
 
   componentDidMount(){
-     this.props.getReasons();
+    this.props.getReasons();
   }
 
   render() {
@@ -68,7 +75,7 @@ export default class Main extends React.Component {
                 <section>
                   {/*  Notice my spread operator on this.state - all properties on that
                   object are now available as props internally, inside my Della Component  */}
-                  { /* <Della { ...this.props } /> */}
+                {/* <Della { ...this.props } />*/}
                   <div className="container">
                     <div className="row">
                       <CityListing {...this.props} />
@@ -76,7 +83,10 @@ export default class Main extends React.Component {
                     </div>
                   </div>
                 </section>
+                <ArtistSearch  { ...this.props }/>
                 <ArtistList listIn={this.props.artistList}/>
+                <Shows shows={this.props.showList} />
+                <About contributors={this.props.contributorList} />
                 <FooterComponent title='Playing Here' bodyTitle='A concert finding application in collaboration with:'
                   body='Amy Tang, Chanelle Francis, Janelle Hinds and Tiffany Nogueira'
                   MentorName='Abdella Ali' MentorImg='della.jpeg'/>
@@ -104,6 +114,7 @@ ReactDOM.render(
       */}
       <Route path="/" component={App} />
       <Route path="/test" component={Della} />
+      <Route path="/about" component={About} />
     </Router>
   </Provider>,
   document.getElementById('root')

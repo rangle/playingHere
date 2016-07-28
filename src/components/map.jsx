@@ -37,7 +37,15 @@ submit.addEventListener('click', ()=>{
 this.geocodeAddress(geocoder, this.mapObj);
 });
 
-
+geolocation.addEventListener('click', () => {
+  navigator.geolocation.getCurrentPosition((position) => {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        this.mapObj.setCenter(new google.maps.LatLng(pos.lat, pos.lng), this.props.zoom);
+});
+});
 };
 
 
@@ -82,10 +90,10 @@ let address = document.getElementById('cityInput').value;
       <button className="btn btn-info btn-lg" id="geolocation" type="button">LOCATION <span className="glyphicon glyphicon-map-marker"></span></button>
     </span>
     </div>
-
       <div id="googleMap" ref="myMap" style={this.myStyle.mapSize}>
       </div>
     </div>
+
     )
   }
 }

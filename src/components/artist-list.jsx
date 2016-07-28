@@ -36,10 +36,9 @@ export default class ArtistList extends React.Component {
 
 
   render = () => {
-    console.log('I am rendering!', this);
 
     return <section style={this.myStyle.mainStyle} >
-              <div class="container">
+              <div className="container">
                 {/*Table headers*/}
                 <div style={this.myStyle.topRowStyle} className="row">
                   <div className="col-md-1">Name</div>
