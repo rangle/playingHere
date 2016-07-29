@@ -31,6 +31,7 @@ function mapStateToProps(state) {
   return {
     reasons: state.test.get('reasonsForGreatness').toJS(),
     artistsSearched: state.artistsearch.get('searchList').toJS(),
+    concertSearched: state.artistsearch.get('concertSearchList').toJS(),
     cities: state.cities.get('list').toJS(),
     selectedCity: state.cities.get('selected').toJS(),
     contributorList: state.contributors.get('list').toJS(),

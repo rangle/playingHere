@@ -20,16 +20,27 @@ export function doASpotifyArtistSearch(nameToSearch) {
   var url=SPOTIFY_SEARCH_ENDPOINT_BEGIN+nameToSearch+SPOTIFY_SEARCH_ENDPOINT_END;
   return (dispatch) =>
   $.get(url)
-  .then(res =>
-    dispatch(setResults(res.artists.items.filter((k,i)=>i<5)))
-  )
+  .then(res => {
+    let top5Artist = res.artists.items.filter((k,i)=>i<1);
+    $.when(...top5Artist.map(artist => doABITArtistSearch(artist.name)))
+    .done((...results) => {
+      let formattedConcertInfo = results.map(subArr => subArr[0] ? subArr[0] : []);
+      let combinedInfo = top5Artist.map((artist, i) => Object.assign({}, artist, {concerts: formattedConcertInfo[i]}))
+      dispatch(setResults(combinedInfo));
+    })
+  }
+)
 }
 
 
 export function doABITArtistSearch(nameToSearch) {
-  var url=BIT_SEARCH_ENDPOINT_BEGIN;
-  return (dispatch) =>
-  $.get(url)
-    .then(res => dispatch(setEventsResults(res))
-  )
+  var url = `http://api.bandsintown.com/artists/${nameToSearch}/events.json?api_version=2.0&app_id=playingHere`;
+  return $.get(url)
+}
+
+
+function zip(arrays) {
+    return arrays[0].map(function(_,i){
+        return arrays.map(function(array){return array[i]})
+    });
 }
