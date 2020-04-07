@@ -19,7 +19,7 @@
     "html-webpack-plugin": "^2.21.0",
     "json-loader": "^0.5.4",
     "react": "^15.1.0",
-    "react-bootstrap": "^0.29.5",
+    "react-bootstrap": "^0.33.1",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.5.2",
