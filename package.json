@@ -6,7 +6,9 @@
     "dev": "webpack-dev-server --progress --colors --open --hot --inline --no-info",
     "build": "webpack",
     "test:watch": "karma start --singleRun false",
-    "test": "karma start --singleRun true"
+    "test": "karma start --singleRun true",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -27,7 +29,8 @@
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -48,5 +51,6 @@
     "react-addons-test-utils": "^15.2.1",
     "sinon": "^1.17.4",
     "style-loader": "^0.13.1"
-  }
+  },
+  "snyk": true
 }
